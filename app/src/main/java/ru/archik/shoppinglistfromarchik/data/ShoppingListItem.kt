@@ -3,8 +3,8 @@ package ru.archik.shoppinglistfromarchik.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "shop_list_name")
-data class ShoppingListName(
+@Entity(tableName = "shop_list_item")
+data class ShoppingListItem(
   @PrimaryKey
   val id: Int? = null,
   val name: String,

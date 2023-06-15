@@ -1,7 +1,8 @@
-package ru.archik.shoppinglistfromarchik.data
+package ru.archik.shoppinglistfromarchik.data.dao
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
+import ru.archik.shoppinglistfromarchik.data.entity.ShoppingListItem
 
 @Dao
 interface ShoppingListDao {
@@ -11,5 +12,5 @@ interface ShoppingListDao {
   @Delete
   suspend fun deleteItem(item: ShoppingListItem)
   @Query("SELECT * FROM shop_list_item")
-  suspend fun getAllItems(): Flow<List<ShoppingListItem>>
+  fun getAllItems(): Flow<List<ShoppingListItem>>
 }

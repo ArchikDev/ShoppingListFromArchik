@@ -7,10 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.archik.shoppinglistfromarchik.data.MainDb
-import ru.archik.shoppinglistfromarchik.data.repository.AddItemRepository
-import ru.archik.shoppinglistfromarchik.data.repository.AddItemRepositoryImpl
-import ru.archik.shoppinglistfromarchik.data.repository.ShoppingListRepository
-import ru.archik.shoppinglistfromarchik.data.repository.ShoppingListRepositoryImpl
+import ru.archik.shoppinglistfromarchik.data.repository.*
 import javax.inject.Singleton
 
 @Module
@@ -40,7 +37,7 @@ object AppModule {
 
   @Provides
   @Singleton // Создаётся инстанс один раз
-  fun provideNoteItemRepo(db: MainDb): NoteItemRepository {
-    return NoteItemRepositoryImpl(db.noteDao)
+  fun provideNoteItemRepo(db: MainDb): NoteRepository {
+    return NoteRepositoryImpl(db.noteDao)
   }
 }

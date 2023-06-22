@@ -13,15 +13,21 @@ import ru.archik.shoppinglistfromarchik.R
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainScreen() {
-  Scaffold(bottomBar = {}, floatingActionButton = {
-    FloatingActionButton(onClick = { }) {
-      Icon(
-        painter = painterResource(id = R.drawable.ic_add),
-        contentDescription = "add",
-        tint = Color.White
-      )
-    }
-  }, floatingActionButtonPosition = FabPosition.Center
+  Scaffold(
+    bottomBar = {
+      BottomNav()
+    },
+    floatingActionButton = {
+      FloatingActionButton(onClick = { }) {
+        Icon(
+          painter = painterResource(id = R.drawable.ic_add),
+          contentDescription = "add",
+          tint = Color.White
+        )
+      }
+    },
+    floatingActionButtonPosition = FabPosition.Center,
+    isFloatingActionButtonDocked = true
   ) {
 
   }

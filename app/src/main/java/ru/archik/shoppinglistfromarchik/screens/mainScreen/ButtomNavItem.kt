@@ -1,4 +1,4 @@
-package ru.archik.shoppinglistfromarchik.mainScreen
+package ru.archik.shoppinglistfromarchik.screens.mainScreen
 
 import ru.archik.shoppinglistfromarchik.R
 

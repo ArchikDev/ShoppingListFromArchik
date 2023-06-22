@@ -1,4 +1,4 @@
-package ru.archik.shoppinglistfromarchik.mainScreen
+package ru.archik.shoppinglistfromarchik.screens.mainScreen
 
 import android.annotation.SuppressLint
 import androidx.compose.material.FabPosition

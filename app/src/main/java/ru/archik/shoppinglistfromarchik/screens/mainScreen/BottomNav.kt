@@ -1,4 +1,4 @@
-package ru.archik.shoppinglistfromarchik.mainScreen
+package ru.archik.shoppinglistfromarchik.screens.mainScreen
 
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem

@@ -5,12 +5,15 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import ru.archik.shoppinglistfromarchik.ui.theme.BlueLight
 
 @Composable
-fun BottomNav() {
+fun BottomNav(navController: NavHostController) {
   val listItems = listOf(
     BottomNavItem.ListItem,
     BottomNavItem.NoteItem,
@@ -20,9 +23,14 @@ fun BottomNav() {
 
   BottomNavigation(backgroundColor = Color.White) {
     listItems.forEach { item ->
+      val navBackStackEntry by navController.currentBackStackEntryAsState()
+      val currentRoute = navBackStackEntry?.destination?.route
+
       BottomNavigationItem(
-        selected = false,
-        onClick = { },
+        selected = currentRoute == item.route,
+        onClick = {
+          navController.navigate(item.route)
+        },
         icon = {
           Icon(
             painter = painterResource(id = item.iconId),

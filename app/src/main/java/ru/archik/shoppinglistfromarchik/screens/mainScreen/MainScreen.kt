@@ -8,14 +8,18 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.compose.rememberNavController
 import ru.archik.shoppinglistfromarchik.R
+import ru.archik.shoppinglistfromarchik.navigations.NavigationGraph
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainScreen() {
+  val navController = rememberNavController()
+
   Scaffold(
     bottomBar = {
-      BottomNav()
+      BottomNav(navController)
     },
     floatingActionButton = {
       FloatingActionButton(onClick = { }) {
@@ -29,7 +33,7 @@ fun MainScreen() {
     floatingActionButtonPosition = FabPosition.Center,
     isFloatingActionButtonDocked = true
   ) {
-
+    NavigationGraph(navController)
   }
 
 }

@@ -15,6 +15,6 @@ import ru.archik.shoppinglistfromarchik.data.entity.ShoppingListItem
 )
 abstract class MainDb: RoomDatabase() {
   abstract val shoppingListDao: ShoppingListDao
-  abstract val noteDao: NoteItemDao
   abstract val addItemDao: AddItemDao
+  abstract val noteDao: NoteItemDao
 }

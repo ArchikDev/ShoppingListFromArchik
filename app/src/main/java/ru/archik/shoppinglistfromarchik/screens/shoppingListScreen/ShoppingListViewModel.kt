@@ -26,7 +26,7 @@ class ShoppingListViewModel @Inject constructor(
 
   private var listItem: ShoppingListItem? = null
 
-  override var dialogTitle = mutableStateOf("List name:")
+  override var dialogTitle = mutableStateOf("")
     private set
 
   override var editTableText = mutableStateOf("")
@@ -46,7 +46,7 @@ class ShoppingListViewModel @Inject constructor(
           repository.insertItem(
             ShoppingListItem(
               listItem?.id,
-              "List 1",
+              editTableText.value,
               "21-12-2023 13:00",
               listItem?.allItemsCount ?: 0,
               listItem?.allSelectedItemsCount ?: 0,

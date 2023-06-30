@@ -1,6 +1,7 @@
 package ru.archik.shoppinglistfromarchik.screens.shoppingListScreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,12 +23,15 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import ru.archik.shoppinglistfromarchik.ui.theme.DarkText
 import ru.archik.shoppinglistfromarchik.ui.theme.LightText
 import ru.archik.shoppinglistfromarchik.R
+import ru.archik.shoppinglistfromarchik.data.entity.ShoppingListItem
 import ru.archik.shoppinglistfromarchik.ui.theme.GreenLight
 import ru.archik.shoppinglistfromarchik.ui.theme.Red
 
-@Preview(showBackground = true)
 @Composable
-fun UiShoppingListItem() {
+fun UiShoppingListItem(
+  item: ShoppingListItem,
+  onEvent: (ShoppingListEvent) -> Unit
+) {
   ConstraintLayout(
     modifier = Modifier.padding(start = 3.dp, top = 18.dp, end = 3.dp)
   ) {
@@ -40,7 +44,7 @@ fun UiShoppingListItem() {
           top.linkTo(parent.top)
           start.linkTo(parent.start)
           end.linkTo(parent.end)
-        }
+        }.clickable {  }
     ) {
       Column(
         modifier = Modifier
@@ -48,7 +52,7 @@ fun UiShoppingListItem() {
           .padding(8.dp)
       ) {
         Text(
-          text = "List 1",
+          text = item.name,
           style = TextStyle(
             color = DarkText,
             fontWeight = FontWeight.Bold,
@@ -56,7 +60,7 @@ fun UiShoppingListItem() {
           )
         )
         Text(
-          text = "12/12/2023 13:00",
+          text = item.time,
           style = TextStyle(
             color = LightText,
             fontSize = 12.sp
@@ -65,12 +69,15 @@ fun UiShoppingListItem() {
         LinearProgressIndicator(
           modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 5.dp)
+            .padding(top = 5.dp),
+          progress = 0.5f
         )
       }
     }
     IconButton(
-      onClick = { /*TODO*/ },
+      onClick = {
+        onEvent(ShoppingListEvent.OnShowDeleteDialog(item))
+      },
       modifier = Modifier
         .constrainAs(deleteButton) {
           top.linkTo(card.top)
@@ -91,7 +98,9 @@ fun UiShoppingListItem() {
       )
     }
     IconButton(
-      onClick = { /*TODO*/ },
+      onClick = {
+        onEvent(ShoppingListEvent.OnShowEditDialog(item))
+      },
       modifier = Modifier
         .constrainAs(editButton) {
           top.linkTo(card.top)
@@ -122,7 +131,7 @@ fun UiShoppingListItem() {
         .padding(end = 5.dp)
     ) {
       Text(
-        text = "12/5",
+        text = "${item.allItemsCount}/${item.allSelectedItemsCount}",
         modifier = Modifier
           .background(Red)
           .padding(top = 3.dp, bottom = 3.dp, start = 5.dp, end = 5.dp),

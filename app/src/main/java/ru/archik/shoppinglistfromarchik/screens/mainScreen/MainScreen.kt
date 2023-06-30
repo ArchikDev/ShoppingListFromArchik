@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ru.archik.shoppinglistfromarchik.R
 import ru.archik.shoppinglistfromarchik.dialog.MainDialog
@@ -18,6 +19,7 @@ import ru.archik.shoppinglistfromarchik.screens.shoppingListScreen.ShoppingListV
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainScreen(
+  mainNavController: NavHostController,
   viewModel: MainScreenViewModel = hiltViewModel()
 ) {
   val navController = rememberNavController()
@@ -40,7 +42,9 @@ fun MainScreen(
     floatingActionButtonPosition = FabPosition.Center,
     isFloatingActionButtonDocked = true
   ) {
-    NavigationGraph(navController)
+    NavigationGraph(navController) { route ->
+      mainNavController.navigate(route)
+    }
     MainDialog(viewModel)
   }
 

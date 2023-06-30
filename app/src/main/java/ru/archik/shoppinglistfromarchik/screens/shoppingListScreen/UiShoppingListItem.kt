@@ -26,6 +26,7 @@ import ru.archik.shoppinglistfromarchik.R
 import ru.archik.shoppinglistfromarchik.data.entity.ShoppingListItem
 import ru.archik.shoppinglistfromarchik.ui.theme.GreenLight
 import ru.archik.shoppinglistfromarchik.ui.theme.Red
+import ru.archik.shoppinglistfromarchik.utils.Routes
 
 @Composable
 fun UiShoppingListItem(
@@ -44,7 +45,9 @@ fun UiShoppingListItem(
           top.linkTo(parent.top)
           start.linkTo(parent.start)
           end.linkTo(parent.end)
-        }.clickable {  }
+        }.clickable {
+          onEvent(ShoppingListEvent.OnItemClick(Routes.ADD_ITEM))
+        }
     ) {
       Column(
         modifier = Modifier

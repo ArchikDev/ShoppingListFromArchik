@@ -6,18 +6,35 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ru.archik.shoppinglistfromarchik.dialog.MainDialog
 import ru.archik.shoppinglistfromarchik.ui.theme.GrayLight
+import ru.archik.shoppinglistfromarchik.utils.UiEvent
 
 @Composable
 fun ShoppingListScreen(
-  viewModel: ShoppingListViewModel = hiltViewModel()
+  viewModel: ShoppingListViewModel = hiltViewModel(),
+  onNavigate: (String) -> Unit
 ) {
   val itemsList = viewModel.list.collectAsState(initial = emptyList())
+
+  // запустится один раз
+  LaunchedEffect(key1 = true) {
+    viewModel.uiEvent.collect { uiEven ->
+      when(uiEven) {
+        is UiEvent.Navigate -> {
+          onNavigate(uiEven.route)
+        }
+        else -> {
+
+        }
+      }
+    }
+  }
 
   LazyColumn(
     modifier = Modifier

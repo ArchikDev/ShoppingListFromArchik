@@ -46,7 +46,7 @@ fun UiShoppingListItem(
           start.linkTo(parent.start)
           end.linkTo(parent.end)
         }.clickable {
-          onEvent(ShoppingListEvent.OnItemClick(Routes.ADD_ITEM))
+          onEvent(ShoppingListEvent.OnItemClick(Routes.ADD_ITEM + "/${item.id}"))
         }
     ) {
       Column(

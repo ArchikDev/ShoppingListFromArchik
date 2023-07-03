@@ -23,7 +23,7 @@ fun MainNavigationGraph() {
     navController = navController,
     startDestination = Routes.MAIN
   ) {
-    composable(Routes.ADD_ITEM) {
+    composable(Routes.ADD_ITEM + "/{listId}") {
       AddItemScreen()
     }
     composable(Routes.NEW_NOTE) {

@@ -23,7 +23,7 @@ fun UiAddItem(
     .fillMaxWidth()
     .padding(top = 3.dp)
     .clickable {
-      onEvent(AddItemEvent.onShowEditDialog(item))
+      onEvent(AddItemEvent.OnShowEditDialog(item))
     }
   ) {
     Row(
@@ -40,11 +40,11 @@ fun UiAddItem(
       Checkbox(
         checked = item.isCheck,
         onCheckedChange = {
-          onEvent(AddItemEvent.onCheckedChange(item.copy(isCheck = it)))
+          onEvent(AddItemEvent.OnCheckedChange(item.copy(isCheck = it)))
         }
       )
       IconButton(onClick = {
-        onEvent(AddItemEvent.onDelete(item))
+        onEvent(AddItemEvent.OnDelete(item))
       }) {
         Icon(
           painter = painterResource(

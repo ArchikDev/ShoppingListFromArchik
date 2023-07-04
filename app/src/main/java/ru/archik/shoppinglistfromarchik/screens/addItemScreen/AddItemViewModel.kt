@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.archik.shoppinglistfromarchik.data.entity.AddItem
+import ru.archik.shoppinglistfromarchik.data.entity.ShoppingListItem
 import ru.archik.shoppinglistfromarchik.data.repository.AddItemRepository
 import ru.archik.shoppinglistfromarchik.dialog.DialogController
 import ru.archik.shoppinglistfromarchik.dialog.DialogEvent
@@ -21,12 +23,17 @@ class AddItemViewModel @Inject constructor(
 
   var itemList: Flow<List<AddItem>>? = null
   var addItem: AddItem? = null
+  var shoppingListItem: ShoppingListItem? = null
   var listId: Int = -1
 
   init {
     listId = savedStateHandle.get<String>("listId")?.toInt()!!
 
-    itemList = listId.let { repository.getAllItemsById(it) }
+    itemList = repository.getAllItemsById(listId)
+
+    viewModelScope.launch {
+      shoppingListItem = repository.getListItemById(listId)
+    }
   }
 
   var itemText = mutableStateOf("")
@@ -65,6 +72,7 @@ class AddItemViewModel @Inject constructor(
     when(event) {
       is AddItemEvent.OnItemSave -> {
         if (listId == -1) return
+
         viewModelScope.launch {
           repository.insertItem(
             AddItem(
@@ -78,6 +86,8 @@ class AddItemViewModel @Inject constructor(
           itemText.value = ""
           addItem = null
         }
+
+        updateCount()
       }
       is AddItemEvent.OnShowEditDialog -> {
         addItem = event.item
@@ -91,10 +101,35 @@ class AddItemViewModel @Inject constructor(
         viewModelScope.launch {
           repository.deleteItem(event.item)
         }
+
+        updateCount()
       }
       is AddItemEvent.OnCheckedChange -> {
         viewModelScope.launch {
           repository.insertItem(event.item)
+        }
+
+        updateCount()
+      }
+    }
+  }
+
+  private fun updateCount() {
+    viewModelScope.launch {
+      itemList?.collect { list ->
+        var counter = 0
+
+        list.forEach { item ->
+          if (item.isCheck) counter++
+        }
+
+        shoppingListItem?.copy(
+          allItemsCount = list.size,
+          allSelectedItemsCount = counter
+        )?.let {
+          repository.insertItem(
+            it
+          )
         }
       }
     }

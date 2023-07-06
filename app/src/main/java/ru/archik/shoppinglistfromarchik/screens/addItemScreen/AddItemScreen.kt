@@ -43,8 +43,10 @@ fun AddItemScreen(
         ) {
           TextField(
             modifier = Modifier.weight(1f),
-            value = "",
-            onValueChange = {},
+            value = viewModel.itemText.value,
+            onValueChange = {
+              viewModel.onEvent(AddItemEvent.OnTextChange(it))
+            },
             label = {
               Text(
                 text = "New Item",
@@ -63,7 +65,7 @@ fun AddItemScreen(
             singleLine = true
           )
           IconButton(onClick = {
-
+            viewModel.onEvent(AddItemEvent.OnItemSave)
           }) {
             Icon(
               painter = painterResource(id = R.drawable.ic_add),
@@ -74,11 +76,17 @@ fun AddItemScreen(
       }
       LazyColumn(modifier = Modifier
         .fillMaxSize()
-        .padding(top = 10.dp)
+        .padding(
+          top = 3.dp,
+          start = 5.dp,
+          end = 5.dp
+        )
       ) {
         if (itemsList != null) {
           items(itemsList.value) {
-            UiAddItem(item = it, onEvent = {})
+            UiAddItem(item = it, onEvent = { event ->
+              viewModel.onEvent(event)
+            })
           }
         }
       }

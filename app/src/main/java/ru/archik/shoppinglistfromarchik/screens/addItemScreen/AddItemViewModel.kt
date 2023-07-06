@@ -59,8 +59,10 @@ class AddItemViewModel @Inject constructor(
       }
       is DialogEvent.OnConfirm -> {
         openDialog.value = false
-        itemText.value = editTableText.value
+        addItem = addItem?.copy(name = editTableText.value)
         editTableText.value = ""
+
+        onEvent(AddItemEvent.OnItemSave)
       }
       is DialogEvent.OnTextChange -> {
         editTableText.value = event.text
@@ -77,7 +79,7 @@ class AddItemViewModel @Inject constructor(
           repository.insertItem(
             AddItem(
               addItem?.id,
-              itemText.value,
+              addItem?.name ?: itemText.value,
               addItem?.isCheck ?: false,
               listId
             )
